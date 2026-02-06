@@ -2,11 +2,6 @@ name: Build Android APK
 
 on:
   workflow_dispatch:  # Manual trigger
-  push:
-    branches: [ main ]
-    paths:
-      - 'apps/android/***'
-      - '.github/workflows/android-build.yml'
 
 jobs:
   build:
@@ -14,7 +9,7 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@4
       with:
         fetch-depth: 0  # Full history for proper versioning
     
@@ -37,39 +32,4 @@ jobs:
         ./gradlew :app:assembleDebug
         echo "APK built successfully"
         
-        # Find the APK file
-        APK_PATH=$hfind . -name "*.apk" -type f | head -1)
-        echo "API found at: $API_PATH"
-        echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
-        
-        # Get APK info
-        echo "=== APK Information ==="
-        ls -lh $APK_PATH
-        echo "==================="
-    
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@4
-      with:
-        name: openclaw-android-apk
-        path: apps/android/${ { steps.build.outputs.apk_path } }
-        retention-days: 90
-    
-    - name: Show download instructions
-      run: |
-        echo "+♅ Build completed successfully!"
-        echo ""
-        echo "🖱 To download the APK:"
-        echo "1. Go to this workflow run"
-        echo "2. Click on 'Artifacts' section"
-        echo "3. Download 'openclaw-android-apk'"
-        echo ""
-        echo "🖲 To install on Android:"
-        echo "1. Enable 'Install from unknown sources' in settings"
-        echo "2. Open the downloaded APK file"
-        echo "3. Follow installation prompts"
-        echo ""
-        echo "💓 To connect to your OpenClaw gateway:"
-        echo "1. Ensure gateway is running on port 18789"
-        echo "2. Open app – Settings – Discovered Gateways"
-        echo "3. Select your gateway or use Manual Gateway"
-        echo "4. Approve pairing: openclaw nodes approve <requestId>"
+        # Find the APK
