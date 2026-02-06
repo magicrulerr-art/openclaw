@@ -27,11 +27,13 @@ jobs:
         cd apps/android
         chmod +x ./gradlew
         ./gradlew :app:assembleDebug
-        echo "APK, built successfully"
+        
+        # Show APK location
+        find . -name "*.apk" -type f -ls
     
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: openclaw-android-apk
-        path: apps/android/app/build/outputs/apk/debug/app-debug.apk
+        path: apps/android/app/build/outputs/apk/debug/*
         retention-days: 90
